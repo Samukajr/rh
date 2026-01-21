@@ -1,0 +1,98 @@
+version: '3.8'
+
+services:
+  # PostgreSQL Database
+  postgres:
+    image: postgres:15
+    container_name: rhplus_postgres
+    environment:
+      POSTGRES_DB: rhplus
+      POSTGRES_USER: rhplus
+      POSTGRES_PASSWORD: rhplus123
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./backend/init.sql:/docker-entrypoint-initdb.d/init.sql
+    networks:
+      - rhplus_network
+
+  # Redis Cache
+  redis:
+    image: redis:7-alpine
+    container_name: rhplus_redis
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    networks:
+      - rhplus_network
+
+  # Backend API (development)
+  backend:
+    build: 
+      context: ./backend
+      dockerfile: Dockerfile.dev
+    container_name: rhplus_backend
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=development
+      - PORT=3000
+      - DB_HOST=postgres
+      - DB_PORT=5432
+      - DB_NAME=rhplus
+      - DB_USER=rhplus
+      - DB_PASS=rhplus123
+      - REDIS_URL=redis://redis:6379
+      - JWT_SECRET=desenvolvimento_jwt_secret_super_seguro_12345
+    volumes:
+      - ./backend:/app
+      - /app/node_modules
+    depends_on:
+      - postgres
+      - redis
+    networks:
+      - rhplus_network
+    command: npm run dev
+
+  # Frontend (development)
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile.dev
+    container_name: rhplus_frontend
+    ports:
+      - "5173:5173"
+    environment:
+      - VITE_API_URL=http://localhost:3000/api
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
+    depends_on:
+      - backend
+    networks:
+      - rhplus_network
+    command: npm run dev
+
+  # Nginx (opcional - para produção)
+  nginx:
+    image: nginx:alpine
+    container_name: rhplus_nginx
+    ports:
+      - "80:80"
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf:ro
+    depends_on:
+      - frontend
+      - backend
+    networks:
+      - rhplus_network
+
+volumes:
+  postgres_data:
+  redis_data:
+
+networks:
+  rhplus_network:
+    driver: bridge

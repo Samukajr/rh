@@ -1,0 +1,19 @@
+{
+  "name": "novo-projeto-rh",
+  "version": "1.0.0",
+  "description": "Sistema completo de gestão de recursos humanos desenvolvido com tecnologias modernas, oferecendo todas as funcionalidades essenciais para o gerenciamento eficiente de colaboradores.",
+  "main": "index.js",
+  "directories": {
+    "doc": "docs"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^5.2.1",
+    "http-server": "^14.1.1"
+  }
+}
