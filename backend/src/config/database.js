@@ -1,7 +1,7 @@
 const { Sequelize } = require('sequelize');
 
-// Configuração temporária com SQLite para teste rápido
-const sequelize = new Sequelize({
+// Configuração do banco de dados
+const config = {
   dialect: 'sqlite',
   storage: './database.sqlite',
   logging: process.env.NODE_ENV === 'development' ? console.log : false,
@@ -11,6 +11,11 @@ const sequelize = new Sequelize({
     createdAt: 'created_at',
     updatedAt: 'updated_at'
   }
-});
+};
 
-module.exports = sequelize;
+// Instância do Sequelize (para uso na aplicação)
+const sequelize = new Sequelize(config);
+
+// Exportar tanto a configuração (para CLI) quanto a instância (para a aplicação)
+module.exports = config;
+module.exports.sequelize = sequelize;

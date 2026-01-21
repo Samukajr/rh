@@ -2,7 +2,8 @@ const fs = require('fs');
 const path = require('path');
 const Sequelize = require('sequelize');
 const basename = path.basename(__filename);
-const sequelize = require('../config/database');
+const config = require('../config/database');
+const sequelize = config.sequelize;
 const db = {};
 
 // Carregar todos os modelos automaticamente
