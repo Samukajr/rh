@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Routes, Route, Navigate } from 'react-router-dom';
+import Home from './pages/Home';
 import Login from './pages/Login';
 import Dashboard from './pages/Dashboard';
 import Employees from './pages/Employees';
@@ -26,6 +27,7 @@ function App() {
 
   return (
     <Routes>
+      <Route path="/" element={<Home />} />
       <Route path="/login" element={<Login />} />
       <Route path="/dashboard" element={isAuthenticated ? <Dashboard /> : <Navigate to="/login" />} />
       <Route path="/employees" element={isAuthenticated ? <Employees /> : <Navigate to="/login" />} />
@@ -33,7 +35,6 @@ function App() {
       <Route path="/medical-certificates" element={isAuthenticated ? <MedicalCertificates /> : <Navigate to="/login" />} />
       <Route path="/payslips" element={isAuthenticated ? <Payslips /> : <Navigate to="/login" />} />
       <Route path="/time-tracking" element={isAuthenticated ? <TimeTracking /> : <Navigate to="/login" />} />
-      <Route path="/" element={isAuthenticated ? <Navigate to="/dashboard" /> : <Navigate to="/login" />} />
     </Routes>
   );
 }
