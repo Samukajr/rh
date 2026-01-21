@@ -18,15 +18,11 @@ const Home: React.FC = () => {
         {/* Logo YUNA */}
         <div className="logo-section">
           <div className="logo-placeholder">
-            <img 
-              src="/images/logo.png" 
-              alt="Logo YUNA" 
-              className="yuna-logo"
-              onError={(e) => {
-                e.currentTarget.style.display = 'none';
-                e.currentTarget.parentElement!.innerHTML = '<div class="logo-text">🏥 YUNA</div>';
-              }}
-            />
+            <div className="logo-content">
+              <div className="hospital-icon">🏥</div>
+              <div className="yuna-text">YUNA</div>
+              <div className="clinic-text">Clínica</div>
+            </div>
           </div>
         </div>
 
