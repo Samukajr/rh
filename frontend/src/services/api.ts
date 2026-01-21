@@ -1,7 +1,10 @@
 import axios from 'axios';
 
+// Usar variável de ambiente ou fallback para localhost
+const apiBaseUrl = process.env.REACT_APP_API_URL || 'http://localhost:3000';
+
 const api = axios.create({
-  baseURL: 'http://localhost:3000/api',
+  baseURL: `${apiBaseUrl}/api`,
   timeout: 10000,
   headers: {
     'Content-Type': 'application/json',
