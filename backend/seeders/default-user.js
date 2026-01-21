@@ -173,7 +173,19 @@ async function createDefaultUser() {
 
   } catch (error) {
     console.error('❌ Erro ao criar usuário padrão:', error.message);
+    process.exit(1);
   }
+}
+
+// Executar se for chamado diretamente
+if (require.main === module) {
+  createDefaultUser().then(() => {
+    console.log('✅ Processo de seeding concluído');
+    process.exit(0);
+  }).catch((error) => {
+    console.error('❌ Erro no seeding:', error);
+    process.exit(1);
+  });
 }
 
 module.exports = createDefaultUser;
