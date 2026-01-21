@@ -51,9 +51,14 @@ app.use(cors({
     'http://localhost:3000',
     'http://127.0.0.1:3001',
     'http://127.0.0.1:5173',
-    'http://127.0.0.1:3000'
+    'http://127.0.0.1:3000',
+    'https://rh-k0eqvat5j-samuels-projects-20b0b165.vercel.app',
+    'https://rh-nu.vercel.app',
+    /^https:\/\/rh-.*\.vercel\.app$/
   ],
-  credentials: true
+  credentials: true,
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization']
 }));
 
 // Body Parser
